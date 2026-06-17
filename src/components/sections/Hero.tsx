@@ -7,7 +7,7 @@ type MockupType = 'laptop' | 'phone' | 'none'
 
 const showcaseImages = [
   { src: '/portable-lab-box.jpeg', alt: 'F2G Portable Lab box with iPhone connected to F2Gsol LTE network', mockup: 'none' as MockupType },
-  { src: '/phone-lte.jpeg', alt: 'iPhone connected to K48 Telecommunications private LTE network', mockup: 'none' as MockupType },
+  { src: '/phone-lte.jpeg', alt: 'iPhone connected to K48 Telecommunications private LTE network', mockup: 'phone' as MockupType },
   { src: '/setup-overview.jpeg', alt: 'F2G Portable Lab — Full setup with BladeRF, amplifiers and mini-PC', mockup: 'none' as MockupType },
   { src: '/photo2_bladerf_closeup.png', alt: 'BladeRF 2.0 micro SDR with BT-100/BT-200 bias-tee amplifiers', mockup: 'laptop' as MockupType },
 ]
@@ -27,9 +27,9 @@ function LaptopMockup({ src, alt }: { src: string; alt: string }) {
 function PhoneMockup({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="flex items-center justify-center w-full h-full p-6 md:p-10">
-      <div className="relative h-[85%]" style={{ aspectRatio: '1060/1076' }}>
-        <img src="/mockup-phones.jpeg" alt="" className="absolute inset-0 w-full h-full object-contain z-10" />
-        <img src={src} alt={alt} className="absolute object-cover rounded-[22px]" style={{ top: '3.5%', left: '54.5%', width: '39.5%', height: '93%' }} />
+      <div className="relative h-[90%] aspect-[9/19.5] bg-black rounded-[40px] p-[6px] shadow-2xl border-[3px] border-gray-800">
+        <div className="absolute top-[10px] left-1/2 -translate-x-1/2 w-[80px] h-[22px] bg-black rounded-full z-10" />
+        <img src={src} alt={alt} className="w-full h-full object-cover rounded-[34px]" />
       </div>
     </div>
   )
