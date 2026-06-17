@@ -1,73 +1,81 @@
-# React + TypeScript + Vite
+# F2G Portable Laboratory Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a promotional landing page for the F2G Portable Lab, a portable end-to-end software defined 4G network used for telecom research, training, testing, and demonstrations.
 
-Currently, two official plugins are available:
+The page highlights the lab's main capabilities, including LTE core network services, VoLTE/IMS, SMS, eSIM provisioning, hardware details, use cases, FAQs, and contact actions. It is built as a single-page React application with a fixed navigation bar, animated section reveals, a rotating hero showcase, and a demo modal.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
 
-## React Compiler
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- Lucide React icons
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js 18 or newer
+- npm
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Clone And Run
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Clone the repository.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone <repository-url>
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Go into the project folder.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd Landing-Page-Portable-Lab
 ```
+
+3. Install the dependencies.
+
+```bash
+npm install
+```
+
+4. Start the development server.
+
+```bash
+npm run dev
+```
+
+5. Open the local address shown in the terminal, usually:
+
+```bash
+http://localhost:5173
+```
+
+## Available Scripts
+
+- `npm run dev` starts the Vite development server.
+- `npm run build` type-checks the app and creates a production build.
+- `npm run preview` serves the production build locally.
+- `npm run lint` runs ESLint across the project.
+
+## What The App Includes
+
+- A fixed header with desktop and mobile navigation.
+- A hero section with a rotating image showcase.
+- Feature cards describing the LTE, IMS, SMS, SDR, and eSIM stack.
+- A step-by-step "How It Works" section.
+- Telecom use cases for training, R&D, field testing, and certification.
+- An FAQ section with technical answers.
+- A contact section with a demo video modal and company links.
+
+## Project Structure
+
+- `src/App.tsx` wires the page sections together.
+- `src/components/layout/` contains the header and footer.
+- `src/components/sections/` contains the main landing page sections.
+- `src/components/ui/` contains reusable UI pieces such as buttons, containers, and the video modal.
+- `src/lib/` contains shared helpers and the reveal animation hook.
+- `public/` contains the logo, product images, and other static assets.
+
+## Notes
+
+- The demo modal expects a `public/demo.mp4` file if you want the video button to play a local demo.
+- The app also uses the F2G logo and product images from the `public/` folder.
