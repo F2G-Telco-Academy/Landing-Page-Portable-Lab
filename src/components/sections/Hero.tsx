@@ -3,11 +3,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Button from '../ui/Button'
 import Container from '../ui/Container'
 
-type MockupType = 'laptop' | 'phone' | 'none'
+type MockupType = 'laptop' | 'phone' | 'phone-sm' | 'none'
 
 const showcaseImages = [
   { src: '/portable-lab-box.jpeg', alt: 'F2G Portable Lab box with iPhone connected to F2Gsol LTE network', mockup: 'none' as MockupType },
-  { src: '/phone-lte.jpeg', alt: 'iPhone connected to K48 Telecommunications private LTE network', mockup: 'phone' as MockupType },
+  { src: '/IMG_0014.PNG', alt: 'iPhone connected to K48 Telecommunications private LTE network', mockup: 'phone-sm' as MockupType },
   { src: '/setup-overview.jpeg', alt: 'F2G Portable Lab — Full setup with BladeRF, amplifiers and mini-PC', mockup: 'phone' as MockupType },
 ]
 
@@ -30,6 +30,19 @@ function PhoneMockup({ src, alt }: { src: string; alt: string }) {
         <div className="absolute top-[14px] left-1/2 -translate-x-1/2 w-[80px] h-[22px] bg-black rounded-full z-10" />
         <div className="w-full h-full rounded-[32px] overflow-hidden border border-gray-300">
           <img src={src} alt={alt} className="block w-full h-full object-fill" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function PhoneMockupSm({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="flex items-center justify-center w-full h-full p-6 md:p-10">
+      <div className="relative h-[85%] aspect-[9/18] bg-black rounded-[40px] p-[8px] shadow-2xl border-[2px] border-gray-700">
+        <div className="absolute top-[14px] left-1/2 -translate-x-1/2 w-[80px] h-[22px] bg-black rounded-full z-10" />
+        <div className="w-full h-full rounded-[32px] overflow-hidden bg-white flex items-center justify-center p-1">
+          <img src={src} alt={alt} className="block max-w-full max-h-full object-contain" />
         </div>
       </div>
     </div>
@@ -89,6 +102,7 @@ export default function Hero() {
                   <div key={idx} className="w-full h-full flex-shrink-0 relative">
                     {image.mockup === 'laptop' && <LaptopMockup src={image.src} alt={image.alt} />}
                     {image.mockup === 'phone' && <PhoneMockup src={image.src} alt={image.alt} />}
+                    {image.mockup === 'phone-sm' && <PhoneMockupSm src={image.src} alt={image.alt} />}
                     {image.mockup === 'none' && <img src={image.src} alt={image.alt} className="absolute inset-0 w-full h-full object-contain" />}
                   </div>
                 ))}
