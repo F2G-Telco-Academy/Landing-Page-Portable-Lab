@@ -1,25 +1,57 @@
 import { useState, useEffect, useRef } from 'react'
-import { PlayCircle, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Button from '../ui/Button'
 import Container from '../ui/Container'
-import VideoModal from '../ui/VideoModal'
+
+type MockupType = 'laptop' | 'phone' | 'box-phone' | 'none'
 
 const showcaseImages = [
-  { src: '/photo1_overall_setup.png', alt: 'F2G Portable Lab — Full setup with BladeRF, amplifiers and mini-PC' },
-  { src: '/photo2_bladerf_closeup.png', alt: 'BladeRF 2.0 micro SDR with BT-100/BT-200 bias-tee amplifiers' },
-  { src: '/photo11_phone_lte.png', alt: 'Smartphone connected to the private LTE network' },
-  { src: '/room.jpeg', alt: 'F2G Telecom Lab workspace' },
+  { src: '/portable-lab-box.jpeg', alt: 'F2G Portable Lab box with iPhone connected to F2Gsol LTE network', mockup: 'box-phone' as MockupType },
+  { src: '/IMG_0014.PNG', alt: 'Smartphone connected to the private LTE network', mockup: 'phone' as MockupType },
+  { src: '/photo1_overall_setup.png', alt: 'F2G Portable Lab — Full setup with BladeRF, amplifiers and mini-PC', mockup: 'laptop' as MockupType },
+  { src: '/photo2_bladerf_closeup.png', alt: 'BladeRF 2.0 micro SDR with BT-100/BT-200 bias-tee amplifiers', mockup: 'laptop' as MockupType },
 ]
 
+function LaptopMockup({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="flex items-center justify-center w-full h-full p-6 md:p-10">
+      <div className="relative w-full max-w-[80%]">
+        <img src="/mockup-laptop.jpeg" alt="" className="w-full h-auto" />
+        {/* Screenshot inside the screen area */}
+        <img src={src} alt={alt} className="absolute object-cover" style={{ top: '3.5%', left: '11.5%', width: '77%', height: '79%' }} />
+      </div>
+    </div>
+  )
+}
+
+function PhoneMockup({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="flex items-center justify-center w-full h-full p-6 md:p-10">
+      <div className="relative h-[85%]" style={{ aspectRatio: '1060/1076' }}>
+        <img src="/mockup-phones.jpeg" alt="" className="absolute inset-0 w-full h-full object-contain z-10" />
+        <img src={src} alt={alt} className="absolute object-cover rounded-[22px]" style={{ top: '3.5%', left: '54.5%', width: '39.5%', height: '93%' }} />
+      </div>
+    </div>
+  )
+}
+
+function BoxPhoneMockup({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="relative w-full h-full">
+      <img src={src} alt={alt} className="absolute inset-0 w-full h-full object-contain" />
+      <img src="/IMG_0014.PNG" alt="iPhone showing K48 Telecommunications LTE connection" className="absolute object-cover rounded-[12px]" style={{ bottom: '2%', left: '2%', width: '22%', height: '85%' }} />
+    </div>
+  )
+}
+
 export default function Hero() {
-  const [isVideoOpen, setIsVideoOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     if (!isPaused && showcaseImages.length > 1) {
-      intervalRef.current = setInterval(() => setCurrentIndex((prev) => (prev + 1) % showcaseImages.length), 3000)
+      intervalRef.current = setInterval(() => setCurrentIndex((prev) => (prev + 1) % showcaseImages.length), 4000)
     }
     return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
   }, [isPaused, currentIndex])
@@ -42,10 +74,6 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-3 justify-center pt-2">
-            <Button size="lg" onClick={() => setIsVideoOpen(true)} className="gap-2">
-              <PlayCircle className="w-4 h-4" />
-              Watch Demo
-            </Button>
             <Button size="lg" variant="outline" onClick={() => window.location.href = '#features'}>
               Learn More
             </Button>
@@ -54,14 +82,10 @@ export default function Hero() {
 
         <div
           className="reveal mt-16 group"
-          style={{ perspective: '2000px' }}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <div
-            className="rounded-2xl overflow-hidden border border-card-border dark:border-gray-700 shadow-2xl relative bg-white dark:bg-gray-900"
-            style={{ transform: 'rotateX(4deg)', transformOrigin: 'center bottom' }}
-          >
+          <div className="rounded-2xl overflow-hidden border border-card-border dark:border-gray-700 shadow-2xl relative bg-gray-50 dark:bg-gray-900">
             <div className="relative w-full overflow-hidden" style={{ paddingBottom: '56.25%' }}>
               <div
                 className="absolute inset-0 flex transition-transform duration-700 ease-in-out"
@@ -69,7 +93,10 @@ export default function Hero() {
               >
                 {showcaseImages.map((image, idx) => (
                   <div key={idx} className="w-full h-full flex-shrink-0 relative">
-                    <img src={image.src} alt={image.alt} className="absolute inset-0 w-full h-full object-contain" />
+                    {image.mockup === 'laptop' && <LaptopMockup src={image.src} alt={image.alt} />}
+                    {image.mockup === 'phone' && <PhoneMockup src={image.src} alt={image.alt} />}
+                    {image.mockup === 'box-phone' && <BoxPhoneMockup src={image.src} alt={image.alt} />}
+                    {image.mockup === 'none' && <img src={image.src} alt={image.alt} className="absolute inset-0 w-full h-full object-contain" />}
                   </div>
                 ))}
               </div>
@@ -85,6 +112,13 @@ export default function Hero() {
                 </button>
               </>
             )}
+
+            {/* Dots indicator */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+              {showcaseImages.map((_, idx) => (
+                <button key={idx} onClick={() => setCurrentIndex(idx)} className={`w-2 h-2 rounded-full transition-all ${idx === currentIndex ? 'bg-accent w-6' : 'bg-gray-400/50'}`} aria-label={`Go to slide ${idx + 1}`} />
+              ))}
+            </div>
           </div>
         </div>
 
@@ -103,8 +137,6 @@ export default function Hero() {
           </div>
         </div>
       </Container>
-
-      <VideoModal isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)} />
     </section>
   )
 }
